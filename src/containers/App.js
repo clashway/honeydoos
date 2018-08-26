@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Chores from '../components/Chores/Chores';
 
 class App extends Component {
   state = {
@@ -21,11 +22,16 @@ class App extends Component {
       'laundry': {
         name: 'Do the laundry',
         value: 10,
+      },
+      'dishes': {
+        name: 'Dishes',
+        value: 10,
       }
     }
   }
 
-  doChore = (player, choreName) => {
+  doChore = (choreName) => {
+    const player = this.state.currentPlayer;
     let currentTotals = { ...this.state.currentScore };
     currentTotals[player]['score'] = currentTotals[player].score + this.state.chores[choreName].value;
     this.setState({
@@ -41,7 +47,7 @@ class App extends Component {
 
         <h1 className="title">Honey Doo Games</h1>
 
-        <h3 className="current-player">Welcome</h3>
+        <h3 className="current-player">Welcome {this.state.currentPlayer}! </h3>
 
         <main className="main">
           <div className="player-toggle">
@@ -52,11 +58,7 @@ class App extends Component {
             </select>
           </div>
 
-          <div className="chore-buttons">
-            <button className="doChore" onClick={() => this.doChore(this.state.currentPlayer, 'laundry')}>
-              Do the laundry
-            </button>
-          </div>
+          <Chores chores={this.state.chores} clicked={this.doChore} />
 
           <div className="current-score">
             <p>cory: {this.state.currentScore.cory.score}</p>
